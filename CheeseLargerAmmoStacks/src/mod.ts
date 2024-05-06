@@ -11,7 +11,6 @@ class Mod implements IPostDBLoadMod
     postDBLoad(container: DependencyContainer): void 
     {
         const logger = container.resolve<ILogger>("WinstonLogger");
-        logger.logWithColor("CHEESE!", LogTextColor.YELLOW, LogBackgroundColor.RED);
 
         const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
         const tables: IDatabaseTables = databaseServer.getTables();
@@ -38,6 +37,7 @@ class Mod implements IPostDBLoadMod
                 items[id]._props[data] = JSON.parse(value);
             }
         }
+        logger.logWithColor("CHEESE Larger Ammo Stacks Enabled", LogTextColor.YELLOW, LogBackgroundColor.RED);
     }
 }
 
