@@ -229,6 +229,7 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.LightVests.Counters.armorDurability.points = 20;
 			globals.config.SkillsSettings.LightVests.WearChanceRepairLVestsReduceEliteLevel = 1;
 			globals.config.SkillsSettings.LightVests.WearAmountRepairLVestsReducePerLevel = 0.02;
+			globals.config.SkillsSettings.LightVests.MeleeDamageLVestsReducePerLevel = 0.01;
 
 			//Heavy Vests
 			globals.config.SkillsSettings.HeavyVests.MoveSpeedPenaltyReductionHVestsReducePerLevel = 0.02;
