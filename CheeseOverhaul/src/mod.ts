@@ -63,6 +63,12 @@ class Mod implements IPostDBLoadMod
                 if (items[id]._parent.includes("5485a8684bdc2da71d8b4567")) 
                 {
                     items[id]._props["StackMaxSize"] = 100;
+                    let damageMult = 1;
+                    if ( items[id]._props.ammoType === "buckshot") 
+                    {
+                        damageMult =  items[id]._props.buckshotBullets;
+                    }
+                    this.addToName(id, ` (${ items[id]._props.Damage * damageMult}/${ items[id]._props.PenetrationPower})`, "append");
                 }
                 //Allow climbing extract with body armor
                 if (items[id]._props.BlocksArmorVest !== undefined) 
