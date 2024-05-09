@@ -177,8 +177,8 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Charisma.BonusSettings.LevelBonusSettings.HealthRestoreTraderDiscount = 0.01;
 
 			//Mag Drills
-			globals.config.SkillsSettings.MagDrills.RaidUnloadedAmmoAction = 0.02;
-			globals.config.SkillsSettings.MagDrills.RaidLoadedAmmoAction = 0.04;
+			globals.config.SkillsSettings.MagDrills.RaidUnloadedAmmoAction = 0.08;
+			globals.config.SkillsSettings.MagDrills.RaidLoadedAmmoAction = 0.16;
 
 			//Immunity
 			globals.config.SkillsSettings.Immunity.StimulatorNegativeBuff = 0.02;
