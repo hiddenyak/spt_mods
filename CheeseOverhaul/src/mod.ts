@@ -177,8 +177,8 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Charisma.BonusSettings.LevelBonusSettings.HealthRestoreTraderDiscount = 0.01;
 
 			//Mag Drills
-			globals.config.SkillsSettings.MagDrills.RaidUnloadedAmmoAction = 0.015;
-			globals.config.SkillsSettings.MagDrills.RaidLoadedAmmoAction = 0.035;
+			globals.config.SkillsSettings.MagDrills.RaidUnloadedAmmoAction = 0.02;
+			globals.config.SkillsSettings.MagDrills.RaidLoadedAmmoAction = 0.04;
 
 			//Immunity
 			globals.config.SkillsSettings.Immunity.StimulatorNegativeBuff = 0.02;
@@ -189,10 +189,10 @@ class Mod implements IPostDBLoadMod {
 
 			//Strength
 			globals.config.SkillsSettings.Strength.ThrowAction = 4;
-			globals.config.SkillsSettings.Strength.SprintActionMax = 0.5;
-			globals.config.SkillsSettings.Strength.SprintActionMin = 0.2;
-			globals.config.SkillsSettings.Strength.MovementActionMax = 0.5;
-			globals.config.SkillsSettings.Strength.MovementActionMin = 0.2;
+			globals.config.SkillsSettings.Strength.SprintActionMax = 0.4;
+			globals.config.SkillsSettings.Strength.SprintActionMin = 0.15;
+			globals.config.SkillsSettings.Strength.MovementActionMax = 0.4;
+			globals.config.SkillsSettings.Strength.MovementActionMin = 0.15;
 
 			//Stress Resistance
 			globals.config.SkillsSettings.StressResistance.HealthNegativeEffect = 3;
@@ -211,13 +211,13 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.AimDrills.WeaponShotAction = 1;
 
 			//Troubleshooting
-			globals.config.SkillsSettings.TroubleShooting.SkillPointsPerMalfFix = 30;
+			globals.config.SkillsSettings.TroubleShooting.SkillPointsPerMalfFix = 50;
 
 			//Surgery
-			globals.config.SkillsSettings.Surgery.SurgeryAction = 15;
+			globals.config.SkillsSettings.Surgery.SurgeryAction = 30;
 
 			//Covert Movement
-			globals.config.SkillsSettings.CovertMovement.MovementAction = 0.2;
+			globals.config.SkillsSettings.CovertMovement.MovementAction = 0.4;
 
 			//Light Vests
 			globals.config.SkillsSettings.LightVests.MoveSpeedPenaltyReductionHVestsReducePerLevel = 0.02;
@@ -225,8 +225,6 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.LightVests.BuffSettings.RareBuffChanceCoff = 0.4;
 			globals.config.SkillsSettings.LightVests.BuffSettings.MaxDurabilityLossToRemoveBuff = 0.5;
 			globals.config.SkillsSettings.LightVests.BuffSettings.CurrentDurabilityLossToRemoveBuff = 0.5;
-			//experimental
-			globals.config.SkillsSettings.LightVests.Counters.armorDurability.points = 20;
 			globals.config.SkillsSettings.LightVests.WearChanceRepairLVestsReduceEliteLevel = 1;
 			globals.config.SkillsSettings.LightVests.WearAmountRepairLVestsReducePerLevel = 0.02;
 			globals.config.SkillsSettings.LightVests.MeleeDamageLVestsReducePerLevel = 0.01;
@@ -237,12 +235,9 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.HeavyVests.BuffSettings.RareBuffChanceCoff = 0.4;
 			globals.config.SkillsSettings.HeavyVests.BuffSettings.MaxDurabilityLossToRemoveBuff = 0.5;
 			globals.config.SkillsSettings.HeavyVests.BuffSettings.CurrentDurabilityLossToRemoveBuff = 0.5;
-			//experimental
-			globals.config.SkillsSettings.HeavyVests.Counters.armorDurability.points = 20;
 			//bug? property is named LVest
 			globals.config.SkillsSettings.HeavyVests.WearChanceRepairLVestsReduceEliteLevel = 1;
 			globals.config.SkillsSettings.HeavyVests.WearAmountRepairLVestsReducePerLevel = 0.02;
-			//bug? melee should only be on light vest
 			globals.config.SkillsSettings.HeavyVests.MeleeDamageLVestsReducePerLevel = 0.01;
 
 			//Weapon Maintenance
