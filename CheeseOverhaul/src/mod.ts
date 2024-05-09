@@ -137,12 +137,12 @@ class Mod implements IPostDBLoadMod {
 			sicc._props.Grids[0]._props["cellsV"] = 10;
 
 			const holodilnick = items["5c093db286f7740a1b2617e3"];
-			holodilnick._props.Grids[0]._props["cellsH"] = 8;
-			holodilnick._props.Grids[0]._props["cellsV"] = 8;
+			holodilnick._props.Grids[0]._props["cellsH"] = 10;
+			holodilnick._props.Grids[0]._props["cellsV"] = 10;
 
-			const medcase = items["5909d4c186f7746ad34e805a"];
-			medcase._props.Grids[0]._props["cellsH"] = 9;
-			medcase._props.Grids[0]._props["cellsV"] = 9;
+			const medicineCase = items["5aafbcd986f7745e590fff23"];
+			medicineCase._props.Grids[0]._props["cellsH"] = 10;
+			medicineCase._props.Grids[0]._props["cellsV"] = 10;
 
 			const ammunitonCase = items["5aafbde786f774389d0cbc0f"];
 			ammunitonCase._props.Grids[0]._props["cellsH"] = 10;
@@ -180,8 +180,8 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Charisma.BonusSettings.LevelBonusSettings.HealthRestoreTraderDiscount = 0.01;
 
 			//Mag Drills
-			globals.config.SkillsSettings.MagDrills.RaidUnloadedAmmoAction = 0.08;
-			globals.config.SkillsSettings.MagDrills.RaidLoadedAmmoAction = 0.16;
+			globals.config.SkillsSettings.MagDrills.RaidUnloadedAmmoAction = 0.2;
+			globals.config.SkillsSettings.MagDrills.RaidLoadedAmmoAction = 0.3;
 
 			//Immunity
 			globals.config.SkillsSettings.Immunity.StimulatorNegativeBuff = 0.02;
@@ -198,29 +198,33 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Strength.MovementActionMin = 0.15;
 
 			//Stress Resistance
-			globals.config.SkillsSettings.StressResistance.HealthNegativeEffect = 3;
+			globals.config.SkillsSettings.StressResistance.HealthNegativeEffect = 6;
 
 			//Vitality
-			globals.config.SkillsSettings.Vitality.DamageTakenAction = 0.065;
+			globals.config.SkillsSettings.Vitality.DamageTakenAction = 0.1;
 
 			//Throwing
-			globals.config.SkillsSettings.Throwing.ThrowAction = 2.5;
+			globals.config.SkillsSettings.Throwing.ThrowAction = 4;
 
 			//Recoil Control
 			globals.config.SkillsSettings.RecoilControl.RecoilBonusPerLevel = 0.005;
-			globals.config.SkillsSettings.RecoilControl.RecoilAction = 0.0003;
+			globals.config.SkillsSettings.RecoilControl.RecoilAction = 0.0006;
 
 			//Aim Drills
-			globals.config.SkillsSettings.AimDrills.WeaponShotAction = 1;
+			globals.config.SkillsSettings.AimDrills.WeaponShotAction = 2;
 
 			//Troubleshooting
 			globals.config.SkillsSettings.TroubleShooting.SkillPointsPerMalfFix = 50;
 
 			//Surgery
-			globals.config.SkillsSettings.Surgery.SurgeryAction = 30;
+			globals.config.SkillsSettings.Surgery.SurgeryAction = 50;
+
+			//Search
+			globals.config.SkillsSettings.Search.FindAction = 0.5;
+			globals.config.SkillsSettings.Search.SearchAction = 1.2;
 
 			//Covert Movement
-			globals.config.SkillsSettings.CovertMovement.MovementAction = 0.4;
+			globals.config.SkillsSettings.CovertMovement.MovementAction = 1;
 
 			//Light Vests
 			globals.config.SkillsSettings.LightVests.MoveSpeedPenaltyReductionHVestsReducePerLevel = 0.02;
@@ -252,8 +256,8 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.WeaponTreatment.BuffSettings.MaxDurabilityLossToRemoveBuff = 0.5;
 
 			//Crafting
-			globals.config.SkillsSettings.Crafting.PointsPerCraftingCycle = 5;
-			globals.config.SkillsSettings.Crafting.PointsPerUniqueCraftCycle = 20;
+			globals.config.SkillsSettings.Crafting.PointsPerCraftingCycle = 20;
+			globals.config.SkillsSettings.Crafting.PointsPerUniqueCraftCycle = 100;
 			globals.config.SkillsSettings.Crafting.ProductionTimeReductionPerLevel = 1.6;
 			globals.config.SkillsSettings.Crafting.CraftTimeReductionPerLevel = 1.6;
 			globals.config.SkillsSettings.Crafting.EliteExtraProductions = 2;
@@ -339,15 +343,17 @@ class Mod implements IPostDBLoadMod {
 			globals.config.BaseUnloadTime = 0.2;
 
 			//Stamina Tweaks
-			globals.config.Stamina.StandupConsumption.x = 0;
-			globals.config.Stamina.StandupConsumption.y = 0;
 			globals.config.Stamina.BaseRestorationRate = 7;
 			globals.config.Stamina.SprintDrainRate = 3;
 			globals.config.Stamina.Capacity = 150;
+			globals.config.Stamina.BaseOverweightLimits.x = 35;
+			globals.config.Stamina.SprintOverweightLimits.x = 35;
 
 			//Increase Scav Rep from killing PMC
 			bots["bear"].experience.standingForKill = 1;
 			bots["usec"].experience.standingForKill = 1;
+			//Removed scav karma loss for killing friendly scav
+			bots["cursedassault"].experience.standingForKill = 0;
 
 			for (const suit in suits) {
 				const suitData = suits[suit];
