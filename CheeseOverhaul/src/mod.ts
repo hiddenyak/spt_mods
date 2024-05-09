@@ -113,6 +113,9 @@ class Mod implements IPostDBLoadMod {
 
 		function tweakContainers() {
 			//Increase stash level four size
+			items["566abbc34bdc2d92178b4576"]._props.Grids[0]._props.cellsV = 50;
+			items["5811ce572459770cba1a34ea"]._props.Grids[0]._props.cellsV = 60;
+			items["5811ce662459770f6f490f32"]._props.Grids[0]._props.cellsV = 70;
 			items["5811ce772459770e9e5f9532"]._props.Grids[0]._props.cellsV = 100;
 
 			const injectorCase = items["619cbf7d23893217ec30b689"];
