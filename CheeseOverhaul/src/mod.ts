@@ -148,6 +148,10 @@ class Mod implements IPostDBLoadMod {
 			ammunitonCase._props.Grids[0]._props["cellsH"] = 10;
 			ammunitonCase._props.Grids[0]._props["cellsV"] = 10;
 
+			const magazineCase = items["5c127c4486f7745625356c13"];
+			magazineCase._props.Grids[0]._props["cellsH"] = 10;
+			magazineCase._props.Grids[0]._props["cellsV"] = 10;
+
 			const kappaContainer = items["5c093ca986f7740a1867ab12"];
 			kappaContainer._props.Grids[0]._props["cellsH"] = 6;
 			kappaContainer._props.Grids[0]._props["cellsV"] = 3;
