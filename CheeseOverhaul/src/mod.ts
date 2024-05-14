@@ -7,6 +7,7 @@ import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
 import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
+import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
 
 class Mod implements IPostDBLoadMod {
 	postDBLoad(container: DependencyContainer): void {
@@ -112,7 +113,7 @@ class Mod implements IPostDBLoadMod {
 		}
 
 		function tweakContainers() {
-			//Increase stash level four size
+			//Increase stash level at each level
 			items["566abbc34bdc2d92178b4576"]._props.Grids[0]._props.cellsV = 50;
 			items["5811ce572459770cba1a34ea"]._props.Grids[0]._props.cellsV = 60;
 			items["5811ce662459770f6f490f32"]._props.Grids[0]._props.cellsV = 70;
@@ -152,6 +153,9 @@ class Mod implements IPostDBLoadMod {
 			magazineCase._props.Grids[0]._props["cellsH"] = 10;
 			magazineCase._props.Grids[0]._props["cellsV"] = 10;
 
+			const pistolCase = items["567143bf4bdc2d1a0f8b4567"];
+			setSize(pistolCase, 6, 6);
+
 			const kappaContainer = items["5c093ca986f7740a1867ab12"];
 			kappaContainer._props.Grids[0]._props["cellsH"] = 6;
 			kappaContainer._props.Grids[0]._props["cellsV"] = 3;
@@ -161,6 +165,15 @@ class Mod implements IPostDBLoadMod {
 			pockets._props.Grids[1]._props["cellsV"] = 2;
 			pockets._props.Grids[2]._props["cellsV"] = 2;
 			pockets._props.Grids[3]._props["cellsV"] = 2;
+		}
+
+		function setSize(
+			container: ITemplateItem,
+			horizontalSize: number,
+			verticalSize: number
+		) {
+			container._props.Grids[0]._props["cellsH"] = horizontalSize;
+			container._props.Grids[0]._props["cellsV"] = verticalSize;
 		}
 
 		function tweakSkills() {
@@ -184,8 +197,8 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Charisma.BonusSettings.LevelBonusSettings.HealthRestoreTraderDiscount = 0.01;
 
 			//Mag Drills
-			globals.config.SkillsSettings.MagDrills.RaidUnloadedAmmoAction = 0.2;
-			globals.config.SkillsSettings.MagDrills.RaidLoadedAmmoAction = 0.3;
+			globals.config.SkillsSettings.MagDrills.RaidUnloadedAmmoAction = 0.4;
+			globals.config.SkillsSettings.MagDrills.RaidLoadedAmmoAction = 0.6;
 
 			//Immunity
 			globals.config.SkillsSettings.Immunity.StimulatorNegativeBuff = 0.02;
@@ -218,14 +231,14 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.AimDrills.WeaponShotAction = 2;
 
 			//Troubleshooting
-			globals.config.SkillsSettings.TroubleShooting.SkillPointsPerMalfFix = 50;
+			globals.config.SkillsSettings.TroubleShooting.SkillPointsPerMalfFix = 100;
 
 			//Surgery
 			globals.config.SkillsSettings.Surgery.SurgeryAction = 50;
 
 			//Search
-			globals.config.SkillsSettings.Search.FindAction = 0.5;
-			globals.config.SkillsSettings.Search.SearchAction = 1.2;
+			globals.config.SkillsSettings.Search.FindAction = 1;
+			globals.config.SkillsSettings.Search.SearchAction = 2;
 
 			//Covert Movement
 			globals.config.SkillsSettings.CovertMovement.MovementAction = 1;
@@ -260,8 +273,8 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.WeaponTreatment.BuffSettings.MaxDurabilityLossToRemoveBuff = 0.5;
 
 			//Crafting
-			globals.config.SkillsSettings.Crafting.PointsPerCraftingCycle = 20;
-			globals.config.SkillsSettings.Crafting.PointsPerUniqueCraftCycle = 100;
+			globals.config.SkillsSettings.Crafting.PointsPerCraftingCycle = 200;
+			globals.config.SkillsSettings.Crafting.PointsPerUniqueCraftCycle = 1000;
 			globals.config.SkillsSettings.Crafting.ProductionTimeReductionPerLevel = 1.6;
 			globals.config.SkillsSettings.Crafting.CraftTimeReductionPerLevel = 1.6;
 			globals.config.SkillsSettings.Crafting.EliteExtraProductions = 2;
@@ -315,6 +328,7 @@ class Mod implements IPostDBLoadMod {
 		function tweakRepair() {
 			repairConfig.armorKitSkillPointGainPerRepairPointMultiplier = 10;
 			repairConfig.weaponTreatment.pointGainMultiplier = 10;
+			repairConfig.applyRandomizeDurabilityLoss = false;
 		}
 
 		function tweakInsurance() {
@@ -352,6 +366,9 @@ class Mod implements IPostDBLoadMod {
 			globals.config.Stamina.Capacity = 150;
 			globals.config.Stamina.BaseOverweightLimits.x = 35;
 			globals.config.Stamina.SprintOverweightLimits.x = 35;
+			globals.config.Stamina.WalkVisualEffectMultiplier = 0;
+			globals.config.Stamina.StaminaExhaustionCausesJiggle = false;
+			globals.config.Stamina.FallDamageMultiplier = 2;
 
 			//Increase Scav Rep from killing PMC
 			bots["bear"].experience.standingForKill = 1;
@@ -370,7 +387,7 @@ class Mod implements IPostDBLoadMod {
 			}
 		}
 
-		function isJSONValueDefined(value) {
+		function isJSONValueDefined(value: { isNaN: any }) {
 			return value !== undefined && !value.isNaN;
 		}
 
