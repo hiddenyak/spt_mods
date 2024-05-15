@@ -80,7 +80,6 @@ class Mod implements IPostDBLoadMod {
 					itemStrings[`${id} Name`] =
 						itemStrings[`${id} Name`] + stringToAppend;
 				}
-
 				//Allow climbing extract with body armor
 				if (items[id]._props.BlocksArmorVest !== undefined) {
 					items[id]._props["BlocksArmorVest"] = false;
@@ -107,6 +106,11 @@ class Mod implements IPostDBLoadMod {
 					items[id]._props["Weight"] =
 						Math.round(0.5 * items[id]._props.Weight * 100) / 100;
 				}
+				//Allow lossless weapon repair with kit
+				if (items[id]._props.MaxRepairKitDegradation !== undefined) {
+					items[id]._props.MinRepairKitDegradation = 0;
+					items[id]._props.MaxRepairKitDegradation = 0;
+				}
 				//Add all items to Flea Blacklist
 				ragfairConfig.dynamic.blacklist.custom.push(id);
 			}
@@ -119,46 +123,38 @@ class Mod implements IPostDBLoadMod {
 			items["5811ce662459770f6f490f32"]._props.Grids[0]._props.cellsV = 70;
 			items["5811ce772459770e9e5f9532"]._props.Grids[0]._props.cellsV = 100;
 
-			const injectorCase = items["619cbf7d23893217ec30b689"];
-			injectorCase._props.Grids[0]._props["cellsH"] = 4;
-			injectorCase._props.Grids[0]._props["cellsV"] = 4;
+			//Injector Case
+			setSize(items["619cbf7d23893217ec30b689"], 4, 4);
 
-			const documentsCase = items["590c60fc86f77412b13fddcf"];
-			documentsCase._props.Grids[0]._props["cellsH"] = 8;
+			//Documents Case
+			setSize(items["590c60fc86f77412b13fddcf"], 8, 4);
 
-			const thiccWeaponCase = items["5b6d9ce188a4501afc1b2b25"];
-			thiccWeaponCase._props.Grids[0]._props["cellsH"] = 12;
+			//Thicc Weapon Case
+			setSize(items["5b6d9ce188a4501afc1b2b25"], 12, 12);
 
-			const thiccItemCase = items["5c0a840b86f7742ffa4f2482"];
-			thiccItemCase._props.Grids[0]._props["cellsH"] = 15;
-			thiccItemCase._props.Grids[0]._props["cellsV"] = 15;
+			//Thicc Item Case
+			setSize(items["5c0a840b86f7742ffa4f2482"], 16, 16);
 
-			const sicc = items["5d235bb686f77443f4331278"];
-			sicc._props.Grids[0]._props["cellsH"] = 10;
-			sicc._props.Grids[0]._props["cellsV"] = 10;
+			//Sicc Case
+			setSize(items["5d235bb686f77443f4331278"], 10, 10);
 
-			const holodilnick = items["5c093db286f7740a1b2617e3"];
-			holodilnick._props.Grids[0]._props["cellsH"] = 10;
-			holodilnick._props.Grids[0]._props["cellsV"] = 10;
+			//Holodilnick
+			setSize(items["5c093db286f7740a1b2617e3"], 10, 10);
 
-			const medicineCase = items["5aafbcd986f7745e590fff23"];
-			medicineCase._props.Grids[0]._props["cellsH"] = 10;
-			medicineCase._props.Grids[0]._props["cellsV"] = 10;
+			//Medicine Case
+			setSize(items["5aafbcd986f7745e590fff23"], 10, 10);
 
-			const ammunitonCase = items["5aafbde786f774389d0cbc0f"];
-			ammunitonCase._props.Grids[0]._props["cellsH"] = 10;
-			ammunitonCase._props.Grids[0]._props["cellsV"] = 10;
+			//Ammo Case
+			setSize(items["5aafbde786f774389d0cbc0f"], 10, 10);
 
-			const magazineCase = items["5c127c4486f7745625356c13"];
-			magazineCase._props.Grids[0]._props["cellsH"] = 10;
-			magazineCase._props.Grids[0]._props["cellsV"] = 10;
+			//Magazine Case
+			setSize(items["5c127c4486f7745625356c13"], 10, 10);
 
-			const pistolCase = items["567143bf4bdc2d1a0f8b4567"];
-			setSize(pistolCase, 6, 6);
+			//Pistol Case
+			setSize(items["567143bf4bdc2d1a0f8b4567"], 6, 6);
 
-			const kappaContainer = items["5c093ca986f7740a1867ab12"];
-			kappaContainer._props.Grids[0]._props["cellsH"] = 6;
-			kappaContainer._props.Grids[0]._props["cellsV"] = 3;
+			//Kappa
+			setSize(items["5c093ca986f7740a1867ab12"], 6, 3);
 
 			const pockets = items["627a4e6b255f7527fb05a0f6"];
 			pockets._props.Grids[0]._props["cellsV"] = 2;
@@ -237,8 +233,8 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Surgery.SurgeryAction = 50;
 
 			//Search
-			globals.config.SkillsSettings.Search.FindAction = 1;
-			globals.config.SkillsSettings.Search.SearchAction = 2;
+			globals.config.SkillsSettings.Search.FindAction = 1.5;
+			globals.config.SkillsSettings.Search.SearchAction = 3;
 
 			//Covert Movement
 			globals.config.SkillsSettings.CovertMovement.MovementAction = 1;
@@ -249,9 +245,10 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.LightVests.BuffSettings.RareBuffChanceCoff = 0.4;
 			globals.config.SkillsSettings.LightVests.BuffSettings.MaxDurabilityLossToRemoveBuff = 0.5;
 			globals.config.SkillsSettings.LightVests.BuffSettings.CurrentDurabilityLossToRemoveBuff = 0.5;
-			globals.config.SkillsSettings.LightVests.WearChanceRepairLVestsReduceEliteLevel = 1;
-			globals.config.SkillsSettings.LightVests.WearAmountRepairLVestsReducePerLevel = 0.02;
 			globals.config.SkillsSettings.LightVests.MeleeDamageLVestsReducePerLevel = 0.01;
+			//BUGGED
+			globals.config.SkillsSettings.LightVests.WearChanceRepairLVestsReduceEliteLevel = 0.99;
+			globals.config.SkillsSettings.LightVests.WearAmountRepairLVestsReducePerLevel = 0.02;
 
 			//Heavy Vests
 			globals.config.SkillsSettings.HeavyVests.MoveSpeedPenaltyReductionHVestsReducePerLevel = 0.02;
@@ -329,6 +326,16 @@ class Mod implements IPostDBLoadMod {
 			repairConfig.armorKitSkillPointGainPerRepairPointMultiplier = 10;
 			repairConfig.weaponTreatment.pointGainMultiplier = 10;
 			repairConfig.applyRandomizeDurabilityLoss = false;
+
+			//Allow lossless armor repair with kit
+			for (const armorMaterial in globals.config.ArmorMaterials) {
+				globals.config.ArmorMaterials[
+					armorMaterial
+				].MaxRepairKitDegradation = 0;
+				globals.config.ArmorMaterials[
+					armorMaterial
+				].MinRepairKitDegradation = 0;
+			}
 		}
 
 		function tweakInsurance() {
