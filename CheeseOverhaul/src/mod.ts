@@ -27,6 +27,7 @@ class Mod implements IPostDBLoadMod {
 		const repairConfig = configServer.getConfig(ConfigTypes.REPAIR);
 		const insuranceConfig = configServer.getConfig(ConfigTypes.INSURANCE);
 		const ragfairConfig = configServer.getConfig(ConfigTypes.RAGFAIR);
+		const weatherConfig = configServer.getConfig(ConfigTypes.WEATHER);
 
 		tweakSkills();
 		tweakItems();
@@ -36,6 +37,14 @@ class Mod implements IPostDBLoadMod {
 		tweakRepair();
 		tweakInsurance();
 		tweakMisc();
+
+		const today = new Date();
+		if (today.getDay() == 6 || today.getDay() == 0) {
+			weekend();
+		} else if (today.getDay() == 3) {
+			//SNOW
+			weatherConfig.forceWinterEvent = true;
+		}
 
 		function tweakItems() {
 			//Allow bringing any item into raid
@@ -49,6 +58,7 @@ class Mod implements IPostDBLoadMod {
 				) {
 					items[id]._props["DiscardLimit"] = -1;
 				}
+
 				//Allow placing any item in secure container
 				if (
 					items[id]._parent == "5448bf274bdc2dfc2f8b456a" &&
@@ -56,6 +66,7 @@ class Mod implements IPostDBLoadMod {
 				) {
 					items[id]._props.Grids[0]._props.filters = [];
 				}
+
 				//Allow placing any item in backpack
 				if (
 					items[id]._parent == "5448e53e4bdc2d60728b4567" &&
@@ -63,6 +74,7 @@ class Mod implements IPostDBLoadMod {
 				) {
 					items[id]._props.Grids[0]._props.filters = [];
 				}
+
 				//Set ammo stack size to 100
 				if (items[id]._parent.includes("5485a8684bdc2da71d8b4567")) {
 					items[id]._props["StackMaxSize"] = 100;
@@ -80,23 +92,27 @@ class Mod implements IPostDBLoadMod {
 					itemStrings[`${id} Name`] =
 						itemStrings[`${id} Name`] + stringToAppend;
 				}
-				//Allow climbing extract with body armor
+				//Allow armor and armored rigs
 				if (items[id]._props.BlocksArmorVest !== undefined) {
 					items[id]._props["BlocksArmorVest"] = false;
 				}
+
 				//Remove turn speed debuff on gear
 				if (items[id]._props.mousePenalty) {
 					items[id]._props["mousePenalty"] = 0;
 				}
+				("");
 				//Remove ergonomics debuff on gear
 				if (items[id]._props.weaponErgonomicPenalty) {
 					items[id]._props["weaponErgonomicPenalty"] = 0;
 				}
+
 				//Remove movement speed penalty debuff on gear
 				if (items[id]._props.speedPenaltyPercent) {
 					items[id]._props["speedPenaltyPercent"] = 0;
 				}
-				//Change the weight
+
+				//Halve the weight
 				if (
 					items[id]._type !== "Node" &&
 					items[id]._type !== undefined &&
@@ -106,11 +122,13 @@ class Mod implements IPostDBLoadMod {
 					items[id]._props["Weight"] =
 						Math.round(0.5 * items[id]._props.Weight * 100) / 100;
 				}
+
 				//Allow lossless weapon repair with kit
 				if (items[id]._props.MaxRepairKitDegradation !== undefined) {
 					items[id]._props.MinRepairKitDegradation = 0;
 					items[id]._props.MaxRepairKitDegradation = 0;
 				}
+
 				//Add all items to Flea Blacklist
 				ragfairConfig.dynamic.blacklist.custom.push(id);
 			}
@@ -200,15 +218,15 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Immunity.StimulatorNegativeBuff = 0.02;
 
 			//Endurance
-			globals.config.SkillsSettings.Endurance.SprintAction = 0.16;
-			globals.config.SkillsSettings.Endurance.MovementAction = 0.02;
+			globals.config.SkillsSettings.Endurance.SprintAction = 0.1;
+			globals.config.SkillsSettings.Endurance.MovementAction = 0.015;
 
 			//Strength
 			globals.config.SkillsSettings.Strength.ThrowAction = 4;
-			globals.config.SkillsSettings.Strength.SprintActionMax = 0.4;
-			globals.config.SkillsSettings.Strength.SprintActionMin = 0.15;
-			globals.config.SkillsSettings.Strength.MovementActionMax = 0.4;
-			globals.config.SkillsSettings.Strength.MovementActionMin = 0.15;
+			globals.config.SkillsSettings.Strength.SprintActionMax = 0.3;
+			globals.config.SkillsSettings.Strength.SprintActionMin = 0.1;
+			globals.config.SkillsSettings.Strength.MovementActionMax = 0.3;
+			globals.config.SkillsSettings.Strength.MovementActionMin = 0.1;
 
 			//Stress Resistance
 			globals.config.SkillsSettings.StressResistance.HealthNegativeEffect = 6;
@@ -217,7 +235,7 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Vitality.DamageTakenAction = 0.1;
 
 			//Throwing
-			globals.config.SkillsSettings.Throwing.ThrowAction = 4;
+			globals.config.SkillsSettings.Throwing.ThrowAction = 5;
 
 			//Recoil Control
 			globals.config.SkillsSettings.RecoilControl.RecoilBonusPerLevel = 0.005;
@@ -227,17 +245,17 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.AimDrills.WeaponShotAction = 2;
 
 			//Troubleshooting
-			globals.config.SkillsSettings.TroubleShooting.SkillPointsPerMalfFix = 100;
+			globals.config.SkillsSettings.TroubleShooting.SkillPointsPerMalfFix = 200;
 
 			//Surgery
-			globals.config.SkillsSettings.Surgery.SurgeryAction = 50;
+			globals.config.SkillsSettings.Surgery.SurgeryAction = 100;
 
 			//Search
 			globals.config.SkillsSettings.Search.FindAction = 1.5;
 			globals.config.SkillsSettings.Search.SearchAction = 3;
 
 			//Covert Movement
-			globals.config.SkillsSettings.CovertMovement.MovementAction = 1;
+			globals.config.SkillsSettings.CovertMovement.MovementAction = 2;
 
 			//Light Vests
 			globals.config.SkillsSettings.LightVests.MoveSpeedPenaltyReductionHVestsReducePerLevel = 0.02;
@@ -360,12 +378,16 @@ class Mod implements IPostDBLoadMod {
 					to: 10000,
 				},
 			];
+
 			//Enable Flea Market at all levels
 			globals.config.RagFair.minUserLevel = -1;
 
 			//Buff mag load speed
 			globals.config.BaseLoadTime = 0.4;
 			globals.config.BaseUnloadTime = 0.2;
+
+			//Allow Red Rebel extracts with armor
+			globals.config.RequirementReferences.Alpinist.splice(2, 1);
 
 			//Stamina Tweaks
 			globals.config.Stamina.BaseRestorationRate = 7;
@@ -378,11 +400,15 @@ class Mod implements IPostDBLoadMod {
 			globals.config.Stamina.FallDamageMultiplier = 2;
 
 			//Increase Scav Rep from killing PMC
-			bots["bear"].experience.standingForKill = 1;
-			bots["usec"].experience.standingForKill = 1;
+			bots["bear"].experience.standingForKill = +1;
+			bots["usec"].experience.standingForKill = +1;
+
 			//Removed scav karma loss for killing friendly scav
 			bots["cursedassault"].experience.standingForKill = 0;
+			bots["assault"].experience.standingForKill = 0;
+			bots["marksman"].experience.standingForKill = 0;
 
+			//Allow all clothing options
 			for (const suit in suits) {
 				const suitData = suits[suit];
 				if (
@@ -392,6 +418,94 @@ class Mod implements IPostDBLoadMod {
 					suitData._props.Side = ["Bear", "Usec"];
 				}
 			}
+		}
+
+		function weekend() {
+			globals.config.exp.match_end.survivedMult = 2.6;
+			logger.logWithColor(
+				"~~~~ DOUBLE EXP WEEKEND ~~~~",
+				LogTextColor.RED,
+				LogBackgroundColor.WHITE
+			);
+			doubleBossSpawnRates();
+			logger.logWithColor(
+				"~~~~ DOUBLE BOSS SPAWN WEEKEND ~~~~",
+				LogTextColor.RED,
+				LogBackgroundColor.WHITE
+			);
+		}
+
+		function doubleBossSpawnRates() {
+			const chance = 60;
+
+			//Reshala
+			locations.bigmap.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "bossBully"
+			).BossChance = chance;
+
+			//Tagilla
+			locations.factory4_day.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "bossTagilla"
+			).BossChance = chance;
+			locations.factory4_night.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "bossTagilla"
+			).BossChance = chance;
+
+			//Killa
+			locations.interchange.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "bossKilla"
+			).BossChance = chance;
+
+			//Glukhar
+			locations.rezervbase.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "bossGluhar"
+			).BossChance = chance;
+
+			//Sanitar
+			locations.shoreline.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "bossSanitar"
+			).BossChance = chance;
+
+			//Kolontay
+			locations.tarkovstreets.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "bossKolontay"
+			).BossChance = chance;
+
+			//Kaban
+			locations.tarkovstreets.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "bossBoar"
+			).BossChance = chance;
+
+			//Shturman
+			locations.woods.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "bossKojaniy"
+			).BossChance = chance;
+
+			//Raiders
+			locations.rezervbase.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "pmcBot"
+			).BossChance = chance;
+
+			locations.laboratory.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "pmcBot"
+			).BossChance = chance;
+
+			//Cultists
+			locations.bigmap.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "sectantPriest"
+			).BossChance = chance;
+
+			locations.factory4_night.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "sectantPriest"
+			).BossChance = chance;
+
+			locations.woods.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "sectantPriest"
+			).BossChance = chance;
+
+			locations.shoreline.base.BossLocationSpawn.find(
+				(bossLocationSpawn) => bossLocationSpawn.BossName === "sectantPriest"
+			).BossChance = chance;
 		}
 
 		function isJSONValueDefined(value: { isNaN: any }) {
