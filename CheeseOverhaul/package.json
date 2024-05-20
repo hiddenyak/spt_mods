@@ -1,9 +1,9 @@
 {
 	"name": "cheese-overhaul",
-	"version": "1.5.0",
+	"version": "1.5.1",
 	"main": "src/mod.js",
 	"license": "MIT",
-	"author": "Cheese",
+	"author": "cheese",
 	"akiVersion": "~3.8",
 	"loadBefore": [],
 	"loadAfter": [],

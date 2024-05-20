@@ -232,10 +232,14 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.StressResistance.HealthNegativeEffect = 6;
 
 			//Vitality
-			globals.config.SkillsSettings.Vitality.DamageTakenAction = 0.1;
+			globals.config.SkillsSettings.Vitality.DamageTakenAction = 0.2;
+
+			//Perception
+			globals.config.SkillsSettings.Perception.OnlineAction = 4;
+			globals.config.SkillsSettings.Perception.UniqueLoot = 0.5;
 
 			//Throwing
-			globals.config.SkillsSettings.Throwing.ThrowAction = 5;
+			globals.config.SkillsSettings.Throwing.ThrowAction = 10;
 
 			//Recoil Control
 			globals.config.SkillsSettings.RecoilControl.RecoilBonusPerLevel = 0.005;
@@ -255,7 +259,7 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Search.SearchAction = 3;
 
 			//Covert Movement
-			globals.config.SkillsSettings.CovertMovement.MovementAction = 2;
+			globals.config.SkillsSettings.CovertMovement.MovementAction = 4;
 
 			//Light Vests
 			globals.config.SkillsSettings.LightVests.MoveSpeedPenaltyReductionHVestsReducePerLevel = 0.02;
