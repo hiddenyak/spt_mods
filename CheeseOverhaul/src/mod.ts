@@ -8,6 +8,7 @@ import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
 import { ConfigServer } from "@spt-aki/servers/ConfigServer";
 import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
 import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
+import { Traders } from "@spt-aki/models/enums/Traders";
 
 class Mod implements IPostDBLoadMod {
 	postDBLoad(container: DependencyContainer): void {
@@ -21,7 +22,7 @@ class Mod implements IPostDBLoadMod {
 		const locations = tables.locations;
 		const suits = tables.templates.customization;
 		const traders = tables.traders;
-		const itemStrings = tables.locales.global["en"];
+		const locales = tables.locales.global["en"];
 
 		const configServer = container.resolve<ConfigServer>("ConfigServer");
 		const repairConfig = configServer.getConfig(ConfigTypes.REPAIR);
@@ -32,6 +33,7 @@ class Mod implements IPostDBLoadMod {
 		tweakSkills();
 		tweakItems();
 		tweakContainers();
+		tweakBackpacks();
 		tweakHideout();
 		tweakRaids();
 		tweakRepair();
@@ -42,7 +44,6 @@ class Mod implements IPostDBLoadMod {
 		if (today.getDay() == 6 || today.getDay() == 0) {
 			weekend();
 		} else if (today.getDay() == 3) {
-			//SNOW
 			weatherConfig.forceWinterEvent = true;
 		}
 
@@ -89,9 +90,9 @@ class Mod implements IPostDBLoadMod {
 						"/" +
 						items[id]._props.PenetrationPower +
 						")";
-					itemStrings[`${id} Name`] =
-						itemStrings[`${id} Name`] + stringToAppend;
+					locales[`${id} Name`] = locales[`${id} Name`] + stringToAppend;
 				}
+
 				//Allow armor and armored rigs
 				if (items[id]._props.BlocksArmorVest !== undefined) {
 					items[id]._props["BlocksArmorVest"] = false;
@@ -101,7 +102,7 @@ class Mod implements IPostDBLoadMod {
 				if (items[id]._props.mousePenalty) {
 					items[id]._props["mousePenalty"] = 0;
 				}
-				("");
+
 				//Remove ergonomics debuff on gear
 				if (items[id]._props.weaponErgonomicPenalty) {
 					items[id]._props["weaponErgonomicPenalty"] = 0;
@@ -179,6 +180,15 @@ class Mod implements IPostDBLoadMod {
 			pockets._props.Grids[1]._props["cellsV"] = 2;
 			pockets._props.Grids[2]._props["cellsV"] = 2;
 			pockets._props.Grids[3]._props["cellsV"] = 2;
+		}
+
+		function tweakBackpacks() {
+			//Hazard 4 Takedown sling backpack Black
+			setSize(items["6034d103ca006d2dca39b3f0"], 6, 10);
+			//Hazard 4 Takedown sling backpack Multicam
+			setSize(items["6038d614d10cbf667352dd44"], 6, 10);
+			//SSO Attack 2 raid backpack
+			setSize(items["5ab8ebf186f7742d8b372e80"], 6, 10);
 		}
 
 		function setSize(
@@ -308,7 +318,7 @@ class Mod implements IPostDBLoadMod {
 
 		function tweakHideout() {
 			//Boost effect of adding GPU
-			hideout.settings.gpuBoostRate = 10;
+			hideout.settings.gpuBoostRate = 5;
 			for (const data of hideout.production) {
 				//Bitcoin Farm Output Capacity Increase
 				if (data._id === "5d5c205bd582a50d042a3c0e") {
@@ -361,16 +371,14 @@ class Mod implements IPostDBLoadMod {
 		}
 
 		function tweakInsurance() {
-			//Prapor
-			traders["54cb50c76803fa8b248b4571"].base.insurance.min_return_hour = 6;
-			traders["54cb50c76803fa8b248b4571"].base.insurance.max_return_hour = 16;
-			insuranceConfig.insuranceMultiplier["54cb50c76803fa8b248b4571"] = 0.3;
-			insuranceConfig.returnChancePercent["54cb50c76803fa8b248b4571"] = 100;
-			//Therapist
-			traders["54cb57776803fa99248b456e"].base.insurance.min_return_hour = 1;
-			traders["54cb57776803fa99248b456e"].base.insurance.max_return_hour = 2;
-			insuranceConfig.insuranceMultiplier["54cb57776803fa99248b456e"] = 0.5;
-			insuranceConfig.returnChancePercent["54cb57776803fa99248b456e"] = 100;
+			traders[Traders.PRAPOR].base.insurance.min_return_hour = 6;
+			traders[Traders.PRAPOR].base.insurance.max_return_hour = 16;
+			insuranceConfig.insuranceMultiplier[Traders.PRAPOR] = 0.3;
+			insuranceConfig.returnChancePercent[Traders.PRAPOR] = 100;
+			traders[Traders.THERAPIST].base.insurance.min_return_hour = 1;
+			traders[Traders.THERAPIST].base.insurance.max_return_hour = 2;
+			insuranceConfig.insuranceMultiplier[Traders.THERAPIST] = 0.5;
+			insuranceConfig.returnChancePercent[Traders.THERAPIST] = 100;
 		}
 
 		function tweakMisc() {
@@ -431,12 +439,12 @@ class Mod implements IPostDBLoadMod {
 				LogTextColor.RED,
 				LogBackgroundColor.WHITE
 			);
-			doubleBossSpawnRates();
-			logger.logWithColor(
-				"~~~~ DOUBLE BOSS SPAWN WEEKEND ~~~~",
-				LogTextColor.RED,
-				LogBackgroundColor.WHITE
-			);
+			// doubleBossSpawnRates();
+			// logger.logWithColor(
+			// 	"~~~~ DOUBLE BOSS SPAWN WEEKEND ~~~~",
+			// 	LogTextColor.RED,
+			// 	LogBackgroundColor.WHITE
+			// );
 		}
 
 		function doubleBossSpawnRates() {
