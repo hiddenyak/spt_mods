@@ -93,11 +93,6 @@ class Mod implements IPostDBLoadMod {
 					locales[`${id} Name`] = locales[`${id} Name`] + stringToAppend;
 				}
 
-				//Allow armor and armored rigs
-				if (items[id]._props.BlocksArmorVest !== undefined) {
-					items[id]._props["BlocksArmorVest"] = false;
-				}
-
 				//Remove turn speed debuff on gear
 				if (items[id]._props.mousePenalty) {
 					items[id]._props["mousePenalty"] = 0;
