@@ -41,7 +41,13 @@ class Mod implements IPostDBLoadMod {
 		tweakMisc();
 
 		const today = new Date();
-		if (today.getDay() == 6 || today.getDay() == 0) {
+		const hours = today.getHours();
+
+		if (
+			today.getDay() == 6 ||
+			today.getDay() == 0 ||
+			(today.getDay() == 5 && hours >= 17)
+		) {
 			weekend();
 		} else if (today.getDay() == 3) {
 			weatherConfig.forceWinterEvent = true;
@@ -313,7 +319,7 @@ class Mod implements IPostDBLoadMod {
 
 		function tweakHideout() {
 			//Boost effect of adding GPU
-			hideout.settings.gpuBoostRate = 5;
+			hideout.settings.gpuBoostRate = 2;
 			for (const data of hideout.production) {
 				//Bitcoin Farm Output Capacity Increase
 				if (data._id === "5d5c205bd582a50d042a3c0e") {
