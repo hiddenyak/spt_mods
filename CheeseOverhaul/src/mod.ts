@@ -53,6 +53,30 @@ class Mod implements IPostDBLoadMod {
 			weatherConfig.forceWinterEvent = true;
 		}
 
+		if (today.getDay() == 5) {
+			for (const assortR in traders) {
+				if (assortR !== "ragfair" && assortR !== "638f541a29ffd1183d187f57") {
+					for (const level in traders[assortR].assort.items) {
+						if (
+							traders[assortR].assort.items[level].upd !== undefined &&
+							traders[assortR].assort.items[level].upd["BuyRestrictionMax"] !==
+								undefined
+						) {
+							delete traders[assortR].assort.items[level].upd[
+								"BuyRestrictionMax"
+							];
+						}
+					}
+				}
+			}
+
+			logger.logWithColor(
+				"~~~~ FIRE SALE FRIDAY ~~~~",
+				LogTextColor.RED,
+				LogBackgroundColor.YELLOW
+			);
+		}
+
 		function tweakItems() {
 			//Allow bringing any item into raid
 			globals.config.RestrictionsInRaid = [];
@@ -172,6 +196,9 @@ class Mod implements IPostDBLoadMod {
 
 			//Pistol Case
 			setSize(items["567143bf4bdc2d1a0f8b4567"], 6, 6);
+
+			//Money Case
+			setSize(items["59fb016586f7746d0d4b423a"], 12, 12);
 
 			//Kappa
 			setSize(items["5c093ca986f7740a1867ab12"], 6, 3);
@@ -340,10 +367,10 @@ class Mod implements IPostDBLoadMod {
 				if (map !== "base") {
 					//Extend Raid timers by 60 minutes
 					if (isJSONValueDefined(locations[map].base.exit_access_time)) {
-						locations[map].base.exit_access_time += 60;
+						locations[map].base.exit_access_time += 30;
 					}
 					if (isJSONValueDefined(locations[map].base.EscapeTimeLimit)) {
-						locations[map].base.EscapeTimeLimit += 60;
+						locations[map].base.EscapeTimeLimit += 30;
 					}
 					//Speed up car extract
 					for (const exit of locations[map].base.exits) {
