@@ -1,14 +1,15 @@
 import { DependencyContainer } from "tsyringe";
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger";
-import { LogTextColor } from "@spt-aki/models/spt/logging/LogTextColor";
-import { LogBackgroundColor } from "@spt-aki/models/spt/logging/LogBackgroundColor";
-import { IPostDBLoadMod } from "@spt-aki/models/external/IPostDBLoadMod";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { IDatabaseTables } from "@spt-aki/models/spt/server/IDatabaseTables";
-import { ConfigServer } from "@spt-aki/servers/ConfigServer";
-import { ConfigTypes } from "@spt-aki/models/enums/ConfigTypes";
-import { ITemplateItem } from "@spt-aki/models/eft/common/tables/ITemplateItem";
-import { Traders } from "@spt-aki/models/enums/Traders";
+
+import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
+import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
+import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";
+import { ConfigServer } from "@spt/servers/ConfigServer";
+import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
+import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
+import { Traders } from "@spt/models/enums/Traders";
 
 class Mod implements IPostDBLoadMod {
 	postDBLoad(container: DependencyContainer): void {
@@ -18,7 +19,6 @@ class Mod implements IPostDBLoadMod {
 		const items = tables.templates.items;
 		const hideout = tables.hideout;
 		const globals = tables.globals;
-		const bots = tables.bots.types;
 		const locations = tables.locations;
 		const suits = tables.templates.customization;
 		const traders = tables.traders;
@@ -37,21 +37,21 @@ class Mod implements IPostDBLoadMod {
 		tweakHideout();
 		tweakRaids();
 		tweakRepair();
-		tweakInsurance();
+		//tweakInsurance();
 		tweakMisc();
 
 		const today = new Date();
 		const hours = today.getHours();
 
-		if (
-			today.getDay() == 6 ||
-			today.getDay() == 0 ||
-			(today.getDay() == 5 && hours >= 17)
-		) {
-			weekend();
-		} else if (today.getDay() == 3) {
-			weatherConfig.forceWinterEvent = true;
-		}
+		// if (
+		// 	today.getDay() == 6 ||
+		// 	today.getDay() == 0 ||
+		// 	(today.getDay() == 5 && hours >= 17)
+		// ) {
+		// 	weekend();
+		// } else if (today.getDay() == 3) {
+		// 	weatherConfig.forceWinterEvent = true;
+		// }
 
 		if (today.getDay() == 5) {
 			for (const assortR in traders) {
@@ -161,12 +161,6 @@ class Mod implements IPostDBLoadMod {
 		}
 
 		function tweakContainers() {
-			//Increase stash level at each level
-			items["566abbc34bdc2d92178b4576"]._props.Grids[0]._props.cellsV = 50;
-			items["5811ce572459770cba1a34ea"]._props.Grids[0]._props.cellsV = 60;
-			items["5811ce662459770f6f490f32"]._props.Grids[0]._props.cellsV = 70;
-			items["5811ce772459770e9e5f9532"]._props.Grids[0]._props.cellsV = 100;
-
 			//Injector Case
 			setSize(items["619cbf7d23893217ec30b689"], 4, 4);
 
@@ -347,10 +341,13 @@ class Mod implements IPostDBLoadMod {
 		function tweakHideout() {
 			//Boost effect of adding GPU
 			hideout.settings.gpuBoostRate = 2;
-			for (const data of hideout.production) {
+			for (const data in hideout.production.recipes) {
+				const productionData = hideout.production.recipes[data];
+
 				//Bitcoin Farm Output Capacity Increase
-				if (data._id === "5d5c205bd582a50d042a3c0e") {
-					data.productionLimitCount = 10;
+				if (productionData._id == "5d5c205bd582a50d042a3c0e") {
+					productionData.productionLimitCount = 10;
+					//productionData.productionTime = Config.Hideout.BitcoinTime * 60;
 				}
 			}
 		}
@@ -365,7 +362,7 @@ class Mod implements IPostDBLoadMod {
 
 			for (const map in locations) {
 				if (map !== "base") {
-					//Extend Raid timers by 60 minutes
+					//Extend Raid timers by 30 minutes
 					if (isJSONValueDefined(locations[map].base.exit_access_time)) {
 						locations[map].base.exit_access_time += 30;
 					}
@@ -438,15 +435,6 @@ class Mod implements IPostDBLoadMod {
 			globals.config.Stamina.WalkVisualEffectMultiplier = 0;
 			globals.config.Stamina.StaminaExhaustionCausesJiggle = false;
 			globals.config.Stamina.FallDamageMultiplier = 2;
-
-			//Increase Scav Rep from killing PMC
-			bots["bear"].experience.standingForKill = +1;
-			bots["usec"].experience.standingForKill = +1;
-
-			//Removed scav karma loss for killing friendly scav
-			bots["cursedassault"].experience.standingForKill = 0;
-			bots["assault"].experience.standingForKill = 0;
-			bots["marksman"].experience.standingForKill = 0;
 
 			//Allow all clothing options
 			for (const suit in suits) {
@@ -561,3 +549,5 @@ class Mod implements IPostDBLoadMod {
 }
 
 module.exports = { mod: new Mod() };
+
+export const mod = new Mod();
