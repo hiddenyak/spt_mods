@@ -28,7 +28,7 @@ class Mod implements IPostDBLoadMod {
 		const repairConfig = configServer.getConfig(ConfigTypes.REPAIR);
 		const insuranceConfig = configServer.getConfig(ConfigTypes.INSURANCE);
 		const ragfairConfig = configServer.getConfig(ConfigTypes.RAGFAIR);
-		const weatherConfig = configServer.getConfig(ConfigTypes.WEATHER);
+		const questsConfig = configServer.getConfig(ConfigTypes.QUEST);
 
 		createCheeseProfile();
 		tweakSkills();
@@ -44,15 +44,13 @@ class Mod implements IPostDBLoadMod {
 		const today = new Date();
 		const hours = today.getHours();
 
-		// if (
-		// 	today.getDay() == 6 ||
-		// 	today.getDay() == 0 ||
-		// 	(today.getDay() == 5 && hours >= 17)
-		// ) {
-		// 	weekend();
-		// } else if (today.getDay() == 3) {
-		// 	weatherConfig.forceWinterEvent = true;
-		// }
+		if (
+			today.getDay() == 6 ||
+			today.getDay() == 0 ||
+			(today.getDay() == 5 && hours >= 17)
+		) {
+			doubleExpWeekend();
+		}
 
 		function createCheeseProfile() {
 			tables.templates.profiles["CHEESE ZERO STATE"] = cloneProfile(
@@ -698,6 +696,18 @@ class Mod implements IPostDBLoadMod {
 					//productionData.productionTime = Config.Hideout.BitcoinTime * 60;
 				}
 			}
+
+			//Speed up hideout construction
+			for (const data in hideout.areas) {
+				const areaData = hideout.areas[data];
+				for (const i in areaData.stages) {
+					if (areaData.stages[i].constructionTime > 0) {
+						areaData.stages[i].constructionTime =
+							areaData.stages[i].constructionTime * 0.25;
+					}
+				}
+			}
+
 			logger.logWithColor(
 				"Tweaked hideout settings",
 				LogTextColor.BLACK,
@@ -715,12 +725,12 @@ class Mod implements IPostDBLoadMod {
 
 			for (const map in locations) {
 				if (map !== "base") {
-					//Extend Raid timers by 30 minutes
+					//Extend Raid timers by 10 minutes
 					if (isJSONValueDefined(locations[map].base.exit_access_time)) {
-						locations[map].base.exit_access_time += 30;
+						locations[map].base.exit_access_time += 10;
 					}
 					if (isJSONValueDefined(locations[map].base.EscapeTimeLimit)) {
-						locations[map].base.EscapeTimeLimit += 30;
+						locations[map].base.EscapeTimeLimit += 10;
 					}
 					//Speed up car extract
 					for (const exit of locations[map].base.exits) {
@@ -728,13 +738,17 @@ class Mod implements IPostDBLoadMod {
 							exit.ExfiltrationTime = 20;
 						}
 					}
+					if (map === "lighthouse" || map === "woods") {
+						locations[map].base.exit_access_time = 90;
+						locations[map].base.EscapeTimeLimit = 90;
+					}
 				}
+				logger.logWithColor(
+					"Tweaked raid settings",
+					LogTextColor.BLACK,
+					LogBackgroundColor.YELLOW
+				);
 			}
-			logger.logWithColor(
-				"Tweaked raid settings",
-				LogTextColor.BLACK,
-				LogBackgroundColor.YELLOW
-			);
 		}
 
 		function tweakRepair() {
@@ -817,6 +831,9 @@ class Mod implements IPostDBLoadMod {
 				}
 			}
 
+			//Quest rewards expire after 7 days
+			questsConfig.mailRedeemTimeHours["default"] = 168;
+
 			logger.logWithColor(
 				"Tweaked miscellaneous settings",
 				LogTextColor.BLACK,
@@ -824,19 +841,13 @@ class Mod implements IPostDBLoadMod {
 			);
 		}
 
-		function weekend() {
+		function doubleExpWeekend() {
 			globals.config.exp.match_end.survivedMult = 2.6;
 			logger.logWithColor(
 				"~~~~ DOUBLE EXP WEEKEND ~~~~",
 				LogTextColor.RED,
 				LogBackgroundColor.WHITE
 			);
-			// doubleBossSpawnRates();
-			// logger.logWithColor(
-			// 	"~~~~ DOUBLE BOSS SPAWN WEEKEND ~~~~",
-			// 	LogTextColor.RED,
-			// 	LogBackgroundColor.WHITE
-			// );
 		}
 
 		//SAIN OVERRIDES THIS
