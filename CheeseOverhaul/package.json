@@ -10,7 +10,8 @@
 	"scripts": {
 		"setup": "npm i",
 		"build": "node ./build.mjs",
-		"buildinfo": "node ./build.mjs --verbose"
+		"buildinfo": "node ./build.mjs --verbose",
+		"build-dev": "node ./build-dev.mjs"
 	},
 	"devDependencies": {
 		"@types/node": "20.11",
