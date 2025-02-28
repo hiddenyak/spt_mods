@@ -30,6 +30,7 @@ class Mod implements IPostDBLoadMod {
 		const ragfairConfig = configServer.getConfig(ConfigTypes.RAGFAIR);
 		const weatherConfig = configServer.getConfig(ConfigTypes.WEATHER);
 
+		createCheeseProfile();
 		tweakSkills();
 		tweakItems();
 		tweakContainers();
@@ -52,6 +53,330 @@ class Mod implements IPostDBLoadMod {
 		// } else if (today.getDay() == 3) {
 		// 	weatherConfig.forceWinterEvent = true;
 		// }
+
+		function createCheeseProfile() {
+			tables.templates.profiles["CHEESE ZERO STATE"] = cloneProfile(
+				tables.templates.profiles["SPT Zero to hero"]
+			);
+			delete tables.templates.profiles["Standard"];
+			delete tables.templates.profiles["Left Behind"];
+			delete tables.templates.profiles["Prepare To Escape"];
+			delete tables.templates.profiles["Edge Of Darkness"];
+			delete tables.templates.profiles["Unheard"];
+			delete tables.templates.profiles["Tournament"];
+			delete tables.templates.profiles["SPT Easy start"];
+			delete tables.templates.profiles["SPT Developer"];
+			delete tables.templates.profiles["SPT Zero to hero"];
+
+			logger.logWithColor(
+				"Added CHEESE profile and removed default profiles",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
+		}
+
+		function cloneProfile(gameVersion: any): any {
+			const cloneProfile = JSON.parse(JSON.stringify(gameVersion));
+
+			const loadDataContent = (pmc: string) => {
+				cloneProfile.descriptionLocaleKey =
+					"Start with nothing and fight for everything";
+				cloneProfile[pmc].character.Bonuses = [
+					{
+						id: "67c1ae3f0b66035b0e1f1a79",
+						templateId: "6602bcf19cc643f44a04274b",
+						type: "StashSize",
+					},
+				];
+				cloneProfile[pmc].character.Hideout.Areas = [
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 4,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 3,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 0,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 1,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 2,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 4,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 5,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 6,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 7,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 8,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 9,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 10,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 11,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 12,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 13,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 14,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 15,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 16,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: false,
+						slots: [],
+						type: 17,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 18,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 19,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 20,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 21,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 22,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 23,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 24,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 25,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 26,
+					},
+					{
+						active: true,
+						completeTime: 0,
+						constructing: false,
+						lastRecipe: "",
+						level: 0,
+						passiveBonusesEnabled: true,
+						slots: [],
+						type: 27,
+					},
+				];
+			};
+
+			loadDataContent("bear");
+			loadDataContent("usec");
+
+			return cloneProfile;
+		}
 
 		if (today.getDay() == 5) {
 			for (const assortR in traders) {
@@ -90,24 +415,23 @@ class Mod implements IPostDBLoadMod {
 					items[id]._props["DiscardLimit"] = -1;
 				}
 
-				//Allow placing any item in secure container
+				//Allow placing any item in secure container or backpack
 				if (
-					items[id]._parent == "5448bf274bdc2dfc2f8b456a" &&
-					items[id]._props.Grids[0]._props.filters !== undefined
+					items[id]._parent == "5448bf274bdc2dfc2f8b456a" ||
+					items[id]._parent == "5448e53e4bdc2d60728b4567"
 				) {
-					items[id]._props.Grids[0]._props.filters = [];
+					if (items[id]._props.Grids[0]._props.filters !== undefined) {
+						items[id]._props.Grids[0]._props.filters = [];
+					}
 				}
 
-				//Allow placing any item in backpack
-				if (
-					items[id]._parent == "5448e53e4bdc2d60728b4567" &&
-					items[id]._props.Grids[0]._props.filters !== undefined
-				) {
-					items[id]._props.Grids[0]._props.filters = [];
-				}
+				const redFlareId = "62389ba9a63f32501b1b4451";
 
 				//Set ammo stack size to 100
-				if (items[id]._parent.includes("5485a8684bdc2da71d8b4567")) {
+				if (
+					items[id]._parent == "5485a8684bdc2da71d8b4567" &&
+					items[id]._id !== redFlareId
+				) {
 					items[id]._props["StackMaxSize"] = 100;
 
 					let damageMult = 1;
@@ -142,8 +466,8 @@ class Mod implements IPostDBLoadMod {
 				if (
 					items[id]._type !== "Node" &&
 					items[id]._type !== undefined &&
-					(items[id]._parent !== "557596e64bdc2dc2118b4571" ||
-						items[id]._parent !== "55d720f24bdc2d88028b456d")
+					items[id]._parent !== "557596e64bdc2dc2118b4571" &&
+					items[id]._parent !== "55d720f24bdc2d88028b456d"
 				) {
 					items[id]._props["Weight"] =
 						Math.round(0.5 * items[id]._props.Weight * 100) / 100;
@@ -202,6 +526,18 @@ class Mod implements IPostDBLoadMod {
 			pockets._props.Grids[1]._props["cellsV"] = 2;
 			pockets._props.Grids[2]._props["cellsV"] = 2;
 			pockets._props.Grids[3]._props["cellsV"] = 2;
+
+			//Increase stash level at each level
+			// items["566abbc34bdc2d92178b4576"]._props.Grids[0]._props.cellsV = 80;
+			// items["5811ce572459770cba1a34ea"]._props.Grids[0]._props.cellsV = 80;
+			// items["5811ce662459770f6f490f32"]._props.Grids[0]._props.cellsV = 80;
+			// items["5811ce772459770e9e5f9532"]._props.Grids[0]._props.cellsV = 80;
+
+			logger.logWithColor(
+				"Tweaked container sizes",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
 		}
 
 		function tweakBackpacks() {
@@ -211,6 +547,12 @@ class Mod implements IPostDBLoadMod {
 			setSize(items["6038d614d10cbf667352dd44"], 6, 10);
 			//SSO Attack 2 raid backpack
 			setSize(items["5ab8ebf186f7742d8b372e80"], 6, 10);
+
+			logger.logWithColor(
+				"Tweaked backpack sizes",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
 		}
 
 		function setSize(
@@ -291,7 +633,7 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.Search.SearchAction = 3;
 
 			//Covert Movement
-			globals.config.SkillsSettings.CovertMovement.MovementAction = 4;
+			globals.config.SkillsSettings.CovertMovement.MovementAction = 6;
 
 			//Light Vests
 			globals.config.SkillsSettings.LightVests.MoveSpeedPenaltyReductionHVestsReducePerLevel = 0.02;
@@ -336,6 +678,12 @@ class Mod implements IPostDBLoadMod {
 			globals.config.SkillsSettings.HideoutManagement.EliteSlots.BitcoinFarm.Container = 20;
 			globals.config.SkillsSettings.HideoutManagement.EliteSlots.Generator.Slots = 4;
 			globals.config.SkillsSettings.HideoutManagement.EliteSlots.WaterCollector.Slots = 4;
+
+			logger.logWithColor(
+				"Tweaked skill settings",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
 		}
 
 		function tweakHideout() {
@@ -350,6 +698,11 @@ class Mod implements IPostDBLoadMod {
 					//productionData.productionTime = Config.Hideout.BitcoinTime * 60;
 				}
 			}
+			logger.logWithColor(
+				"Tweaked hideout settings",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
 		}
 
 		function tweakRaids() {
@@ -377,6 +730,11 @@ class Mod implements IPostDBLoadMod {
 					}
 				}
 			}
+			logger.logWithColor(
+				"Tweaked raid settings",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
 		}
 
 		function tweakRepair() {
@@ -393,6 +751,12 @@ class Mod implements IPostDBLoadMod {
 					armorMaterial
 				].MinRepairKitDegradation = 0;
 			}
+
+			logger.logWithColor(
+				"Tweaked repair settings",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
 		}
 
 		function tweakInsurance() {
@@ -404,6 +768,12 @@ class Mod implements IPostDBLoadMod {
 			traders[Traders.THERAPIST].base.insurance.max_return_hour = 2;
 			insuranceConfig.insuranceMultiplier[Traders.THERAPIST] = 0.5;
 			insuranceConfig.returnChancePercent[Traders.THERAPIST] = 100;
+
+			logger.logWithColor(
+				"Tweaked insurance settings",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
 		}
 
 		function tweakMisc() {
@@ -446,6 +816,12 @@ class Mod implements IPostDBLoadMod {
 					suitData._props.Side = ["Bear", "Usec"];
 				}
 			}
+
+			logger.logWithColor(
+				"Tweaked miscellaneous settings",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
 		}
 
 		function weekend() {
@@ -463,6 +839,7 @@ class Mod implements IPostDBLoadMod {
 			// );
 		}
 
+		//SAIN OVERRIDES THIS
 		function doubleBossSpawnRates() {
 			const chance = 60;
 
