@@ -743,12 +743,12 @@ class Mod implements IPostDBLoadMod {
 						locations[map].base.EscapeTimeLimit = 90;
 					}
 				}
-				logger.logWithColor(
-					"Tweaked raid settings",
-					LogTextColor.BLACK,
-					LogBackgroundColor.YELLOW
-				);
 			}
+			logger.logWithColor(
+				"Tweaked raid settings",
+				LogTextColor.BLACK,
+				LogBackgroundColor.YELLOW
+			);
 		}
 
 		function tweakRepair() {
@@ -775,11 +775,10 @@ class Mod implements IPostDBLoadMod {
 
 		function tweakInsurance() {
 			traders[Traders.PRAPOR].base.insurance.min_return_hour = 6;
-			traders[Traders.PRAPOR].base.insurance.max_return_hour = 16;
+			traders[Traders.PRAPOR].base.insurance.max_return_hour = 24;
 			insuranceConfig.insuranceMultiplier[Traders.PRAPOR] = 0.3;
-			insuranceConfig.returnChancePercent[Traders.PRAPOR] = 100;
-			traders[Traders.THERAPIST].base.insurance.min_return_hour = 1;
-			traders[Traders.THERAPIST].base.insurance.max_return_hour = 2;
+			traders[Traders.THERAPIST].base.insurance.min_return_hour = 6;
+			traders[Traders.THERAPIST].base.insurance.max_return_hour = 12;
 			insuranceConfig.insuranceMultiplier[Traders.THERAPIST] = 0.5;
 			insuranceConfig.returnChancePercent[Traders.THERAPIST] = 100;
 
