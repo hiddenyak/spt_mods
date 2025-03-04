@@ -10,6 +10,7 @@ import { ConfigServer } from "@spt/servers/ConfigServer";
 import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { Traders } from "@spt/models/enums/Traders";
+import { art } from "./art";
 
 class Mod implements IPostDBLoadMod {
 	postDBLoad(container: DependencyContainer): void {
@@ -67,7 +68,7 @@ class Mod implements IPostDBLoadMod {
 			delete tables.templates.profiles["SPT Zero to hero"];
 
 			logger.logWithColor(
-				"Added CHEESE profile and removed default profiles",
+				"Added CHEESE ZERO STATE profile",
 				LogTextColor.BLACK,
 				LogBackgroundColor.YELLOW
 			);
@@ -927,11 +928,7 @@ class Mod implements IPostDBLoadMod {
 			return value !== undefined && !value.isNaN;
 		}
 
-		logger.logWithColor(
-			"~~~~ CHEESE OVERHAUL LOADED ~~~~",
-			LogTextColor.BLACK,
-			LogBackgroundColor.YELLOW
-		);
+		logger.logWithColor(art, LogTextColor.YELLOW, LogBackgroundColor.BLACK);
 	}
 }
 
