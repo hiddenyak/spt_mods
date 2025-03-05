@@ -121,7 +121,7 @@ export function handleSkills(tables: IDatabaseTables, logger: ILogger): void {
 	globals.config.SkillsSettings.HideoutManagement.EliteSlots.WaterCollector.Slots = 4;
 
 	logger.logWithColor(
-		"Tweaked skill settings",
+		"Handled Skills",
 		LogTextColor.BLACK,
 		LogBackgroundColor.YELLOW
 	);

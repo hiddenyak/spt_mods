@@ -29,7 +29,7 @@ export function handleHideout(tables: IDatabaseTables, logger: ILogger): void {
 	}
 
 	logger.logWithColor(
-		"Tweaked hideout settings",
+		"Handled Hideout",
 		LogTextColor.BLACK,
 		LogBackgroundColor.YELLOW
 	);

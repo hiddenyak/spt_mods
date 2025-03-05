@@ -22,7 +22,7 @@ export function handleTraders(
 	insuranceConfig.returnChancePercent[Traders.THERAPIST] = 100;
 
 	logger.logWithColor(
-		"Tweaked insurance settings",
+		"Handled Traders",
 		LogTextColor.BLACK,
 		LogBackgroundColor.YELLOW
 	);
