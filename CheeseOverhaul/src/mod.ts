@@ -11,6 +11,8 @@ import { ConfigTypes } from "@spt/models/enums/ConfigTypes";
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import { Traders } from "@spt/models/enums/Traders";
 import { art } from "./art";
+import { bagsToBuff } from "./bagsToBuff";
+import { profileHideoutConfig } from "./profileHideoutConfig";
 
 class Mod implements IPostDBLoadMod {
 	postDBLoad(container: DependencyContainer): void {
@@ -35,22 +37,61 @@ class Mod implements IPostDBLoadMod {
 		tweakSkills();
 		tweakItems();
 		tweakContainers();
-		tweakBackpacks();
+		buffBackpacks();
 		tweakHideout();
 		tweakRaids();
 		tweakRepair();
-		//tweakInsurance();
+		tweakInsurance();
 		tweakMisc();
+		setupEvents();
 
-		const today = new Date();
-		const hours = today.getHours();
+		function setupEvents() {
+			const today = new Date();
+			const hours = today.getHours();
 
-		if (
-			today.getDay() == 6 ||
-			today.getDay() == 0 ||
-			(today.getDay() == 5 && hours >= 17)
-		) {
-			doubleExpWeekend();
+			if (
+				today.getDay() == 6 ||
+				today.getDay() == 0 ||
+				(today.getDay() == 5 && hours >= 17)
+			) {
+				globals.config.exp.match_end.survivedMult = 2.6;
+				logger.logWithColor(
+					"~~~~ DOUBLE EXP WEEKEND ~~~~",
+					LogTextColor.RED,
+					LogBackgroundColor.WHITE
+				);
+			}
+
+			if (today.getDay() == 5) {
+				for (const assortR in traders) {
+					if (assortR !== "ragfair" && assortR !== "638f541a29ffd1183d187f57") {
+						for (const level in traders[assortR].assort.items) {
+							if (
+								traders[assortR].assort.items[level].upd !== undefined &&
+								traders[assortR].assort.items[level].upd[
+									"BuyRestrictionMax"
+								] !== undefined
+							) {
+								delete traders[assortR].assort.items[level].upd[
+									"BuyRestrictionMax"
+								];
+							}
+						}
+					}
+				}
+				logger.logWithColor(
+					"~~~~ FIRE SALE FRIDAY ~~~~",
+					LogTextColor.RED,
+					LogBackgroundColor.YELLOW
+				);
+			}
+		}
+
+		//Enable all quests DEV ONLY
+		const quests = tables.templates.quests;
+		for (const id in quests) {
+			const questData = quests[id];
+			questData.conditions.AvailableForStart = [];
 		}
 
 		function createCheeseProfile() {
@@ -76,7 +117,6 @@ class Mod implements IPostDBLoadMod {
 
 		function cloneProfile(gameVersion: any): any {
 			const cloneProfile = JSON.parse(JSON.stringify(gameVersion));
-
 			const loadDataContent = (pmc: string) => {
 				cloneProfile.descriptionLocaleKey =
 					"Start with nothing and fight for everything";
@@ -87,324 +127,16 @@ class Mod implements IPostDBLoadMod {
 						type: "StashSize",
 					},
 				];
-				cloneProfile[pmc].character.Hideout.Areas = [
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 4,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 3,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 0,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 1,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 2,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 4,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 5,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 6,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 7,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 8,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 9,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 10,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 11,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 12,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 13,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 14,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 15,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 16,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: false,
-						slots: [],
-						type: 17,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 18,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 19,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 20,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 21,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 22,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 23,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 24,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 25,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 26,
-					},
-					{
-						active: true,
-						completeTime: 0,
-						constructing: false,
-						lastRecipe: "",
-						level: 0,
-						passiveBonusesEnabled: true,
-						slots: [],
-						type: 27,
-					},
-				];
+				cloneProfile[pmc].character.Hideout.Areas = profileHideoutConfig;
 			};
-
 			loadDataContent("bear");
 			loadDataContent("usec");
-
 			return cloneProfile;
-		}
-
-		if (today.getDay() == 5) {
-			for (const assortR in traders) {
-				if (assortR !== "ragfair" && assortR !== "638f541a29ffd1183d187f57") {
-					for (const level in traders[assortR].assort.items) {
-						if (
-							traders[assortR].assort.items[level].upd !== undefined &&
-							traders[assortR].assort.items[level].upd["BuyRestrictionMax"] !==
-								undefined
-						) {
-							delete traders[assortR].assort.items[level].upd[
-								"BuyRestrictionMax"
-							];
-						}
-					}
-				}
-			}
-
-			logger.logWithColor(
-				"~~~~ FIRE SALE FRIDAY ~~~~",
-				LogTextColor.RED,
-				LogBackgroundColor.YELLOW
-			);
 		}
 
 		function tweakItems() {
 			//Allow bringing any item into raid
 			globals.config.RestrictionsInRaid = [];
-
 			for (const id in items) {
 				//Allow discarding any item in raid
 				if (
@@ -425,7 +157,6 @@ class Mod implements IPostDBLoadMod {
 				}
 
 				const redFlareId = "62389ba9a63f32501b1b4451";
-
 				//Set ammo stack size to 100
 				if (
 					items[id]._parent == "5485a8684bdc2da71d8b4567" &&
@@ -539,16 +270,13 @@ class Mod implements IPostDBLoadMod {
 			);
 		}
 
-		function tweakBackpacks() {
-			//Hazard 4 Takedown sling backpack Black
-			setSize(items["6034d103ca006d2dca39b3f0"], 6, 10);
-			//Hazard 4 Takedown sling backpack Multicam
-			setSize(items["6038d614d10cbf667352dd44"], 6, 10);
-			//SSO Attack 2 raid backpack
-			setSize(items["5ab8ebf186f7742d8b372e80"], 6, 10);
+		function buffBackpacks() {
+			bagsToBuff.forEach((itemId) => {
+				setSize(items[itemId], 6, 10);
+			});
 
 			logger.logWithColor(
-				"Tweaked backpack sizes",
+				"Buffed backpacks",
 				LogTextColor.BLACK,
 				LogBackgroundColor.YELLOW
 			);
@@ -690,7 +418,6 @@ class Mod implements IPostDBLoadMod {
 			hideout.settings.gpuBoostRate = 2;
 			for (const data in hideout.production.recipes) {
 				const productionData = hideout.production.recipes[data];
-
 				//Bitcoin Farm Output Capacity Increase
 				if (productionData._id == "5d5c205bd582a50d042a3c0e") {
 					productionData.productionLimitCount = 10;
@@ -777,10 +504,12 @@ class Mod implements IPostDBLoadMod {
 		function tweakInsurance() {
 			traders[Traders.PRAPOR].base.insurance.min_return_hour = 6;
 			traders[Traders.PRAPOR].base.insurance.max_return_hour = 24;
-			insuranceConfig.insuranceMultiplier[Traders.PRAPOR] = 0.3;
 			traders[Traders.THERAPIST].base.insurance.min_return_hour = 6;
 			traders[Traders.THERAPIST].base.insurance.max_return_hour = 12;
-			insuranceConfig.insuranceMultiplier[Traders.THERAPIST] = 0.5;
+			traders[Traders.THERAPIST].base.loyaltyLevels[1].insurance_price_coef = 5;
+			traders[Traders.THERAPIST].base.loyaltyLevels[1].insurance_price_coef = 4;
+			traders[Traders.THERAPIST].base.loyaltyLevels[1].insurance_price_coef = 3;
+			traders[Traders.THERAPIST].base.loyaltyLevels[1].insurance_price_coef = 2;
 			insuranceConfig.returnChancePercent[Traders.THERAPIST] = 100;
 
 			logger.logWithColor(
@@ -838,15 +567,6 @@ class Mod implements IPostDBLoadMod {
 				"Tweaked miscellaneous settings",
 				LogTextColor.BLACK,
 				LogBackgroundColor.YELLOW
-			);
-		}
-
-		function doubleExpWeekend() {
-			globals.config.exp.match_end.survivedMult = 2.6;
-			logger.logWithColor(
-				"~~~~ DOUBLE EXP WEEKEND ~~~~",
-				LogTextColor.RED,
-				LogBackgroundColor.WHITE
 			);
 		}
 
