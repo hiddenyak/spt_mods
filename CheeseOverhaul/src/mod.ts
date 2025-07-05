@@ -43,13 +43,6 @@ class Mod implements IPostDBLoadMod {
 		handleTraders(tables, insuranceConfig, logger);
 		handleMiscellaneous(tables, repairConfig, logger);
 
-		//Enable all quests DEV ONLY
-		const quests = tables.templates.quests;
-		for (const id in quests) {
-			const questData = quests[id];
-			questData.conditions.AvailableForStart = [];
-		}
-
 		//Increase stash level at each level
 		// items["566abbc34bdc2d92178b4576"]._props.Grids[0]._props.cellsV = 80;
 		// items["5811ce572459770cba1a34ea"]._props.Grids[0]._props.cellsV = 80;
