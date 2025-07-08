@@ -36,11 +36,13 @@ function extendRaidTimers(location: any): void {
 }
 
 function speedUpCarExtract(location: any): void {
-	for (const exit of location.base.exits) {
-		if (exit.PassageRequirement == "TransferItem") {
-			exit.ExfiltrationTime = 20;
-		}
-	}
+	location.allExtracts
+		.filter((extract) => {
+			extract.PassageRequirement.includes("TransferItem");
+		})
+		.forEach((extract) => {
+			extract.ExfiltrationTime = 20;
+		});
 }
 
 function extendRaidTimersOnSpecificMaps(map: string, location: any): void {
