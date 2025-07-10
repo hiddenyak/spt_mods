@@ -12,11 +12,10 @@ export function handleLocations(
 	//Enable insurance on labs
 	locations.laboratory.base.Insurance = true;
 
-	for (const map in locations) {
-		if (map !== "base") {
-			extendRaidTimers(locations[map]);
-			speedUpCarExtract(locations[map]);
-			extendRaidTimersOnSpecificMaps(map, locations[map]);
+	for (const location in locations) {
+		if (location !== "base") {
+			extendRaidTimers(location, locations[location]);
+			speedUpCarExtract(locations[location], logger);
 		}
 	}
 	logger.logWithColor(
@@ -26,18 +25,14 @@ export function handleLocations(
 	);
 }
 
-function extendRaidTimers(location: any): void {
-	if (isJSONValueDefined(location.base.exit_access_time)) {
-		location.base.exit_access_time += 10;
-	}
-	if (isJSONValueDefined(location.base.EscapeTimeLimit)) {
-		location.base.EscapeTimeLimit += 10;
-	}
-}
-
-function speedUpCarExtract(location: any): void {
+function speedUpCarExtract(location: any, logger): void {
+	logger.logWithColor(
+		"LOCATIONS:" + location,
+		LogTextColor.RED,
+		LogBackgroundColor.WHITE
+	);
 	location.allExtracts
-		.filter((extract) => {
+		.filter((extract: { PassageRequirement: string }) => {
 			extract.PassageRequirement.includes("TransferItem");
 		})
 		.forEach((extract) => {
@@ -45,13 +40,12 @@ function speedUpCarExtract(location: any): void {
 		});
 }
 
-function extendRaidTimersOnSpecificMaps(map: string, location: any): void {
+function extendRaidTimers(map: string, location: any): void {
 	if (map === "lighthouse" || map === "woods") {
 		location.base.exit_access_time = 90;
 		location.base.EscapeTimeLimit = 90;
+	} else {
+		location.base.exit_access_time += 10;
+		location.base.EscapeTimeLimit += 10;
 	}
-}
-
-function isJSONValueDefined(value: { isNaN: any }) {
-	return value !== undefined && !value.isNaN;
 }
