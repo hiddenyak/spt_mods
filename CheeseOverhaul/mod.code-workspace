@@ -1,16 +1,14 @@
 {
-  "folders": [
-    {
-      "path": "."
-    }
-  ],
-  "extensions": {
-    "recommendations": [
-      "dbaeumer.vscode-eslint"
-    ]
-  },
-  "settings": {
-    "[typescript]": {
-    }
-  }
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"extensions": {
+		"recommendations": ["dbaeumer.vscode-eslint"]
+	},
+	"settings": {
+		"[typescript]": {},
+		"cSpell.words": ["Exfiltration"]
+	}
 }

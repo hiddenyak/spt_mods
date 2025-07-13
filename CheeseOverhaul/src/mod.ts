@@ -18,6 +18,7 @@ import { handleEvents } from "./events";
 import { handleTraders } from "./traders";
 import { handleHideout } from "./hideout";
 import { handleMiscellaneous } from "./miscellaneous";
+import { handleLocations } from "./locations";
 
 class Mod implements IPostDBLoadMod {
 	postDBLoad(container: DependencyContainer): void {
@@ -37,7 +38,7 @@ class Mod implements IPostDBLoadMod {
 		handleContainers(tables, logger);
 		handleEvents(tables, logger);
 		handleHideout(tables, logger);
-
+		handleLocations(tables, logger);
 		handleItems(tables, ragfairConfig, logger);
 		handleQuests(tables, questConfig, logger);
 		handleTraders(tables, insuranceConfig, logger);
