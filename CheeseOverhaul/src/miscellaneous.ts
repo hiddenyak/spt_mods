@@ -5,7 +5,8 @@ import { ILogger } from "@spt/models/spt/utils/ILogger";
 
 export function handleMiscellaneous(
 	tables: IDatabaseTables,
-    repairConfig: any,
+	repairConfig: any,
+	inRaidConfig: any,
 	logger: ILogger
 ): void {
 	const globals = tables.globals;
@@ -68,6 +69,9 @@ export function handleMiscellaneous(
 	repairConfig.armorKitSkillPointGainPerRepairPointMultiplier = 10;
 	repairConfig.weaponTreatment.pointGainMultiplier = 10;
 	repairConfig.applyRandomizeDurabilityLoss = false;
+
+	//Attempt to increase scav extract standing gain
+	inRaidConfig.scavExtractStandingGain = 0.1;
 
 	logger.logWithColor(
 		"Handled Miscellaneous",

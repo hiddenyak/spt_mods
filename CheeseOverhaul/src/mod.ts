@@ -32,6 +32,7 @@ class Mod implements IPostDBLoadMod {
 		const insuranceConfig = configServer.getConfig(ConfigTypes.INSURANCE);
 		const questConfig = configServer.getConfig(ConfigTypes.QUEST);
 		const ragfairConfig = configServer.getConfig(ConfigTypes.RAGFAIR);
+		const inRaidConfig = configServer.getConfig(ConfigTypes.IN_RAID);
 
 		handleSkills(tables, logger);
 		handleProfiles(tables, logger);
@@ -42,7 +43,7 @@ class Mod implements IPostDBLoadMod {
 		handleItems(tables, ragfairConfig, logger);
 		handleQuests(tables, questConfig, logger);
 		handleTraders(tables, insuranceConfig, logger);
-		handleMiscellaneous(tables, repairConfig, logger);
+		handleMiscellaneous(tables, repairConfig, inRaidConfig, logger);
 
 		//Increase stash level at each level
 		// items["566abbc34bdc2d92178b4576"]._props.Grids[0]._props.cellsV = 80;
