@@ -15,10 +15,6 @@ export function handleTraders(
 	traders[Traders.PRAPOR].base.insurance.max_return_hour = 24;
 	traders[Traders.THERAPIST].base.insurance.min_return_hour = 6;
 	traders[Traders.THERAPIST].base.insurance.max_return_hour = 12;
-	traders[Traders.THERAPIST].base.loyaltyLevels[0].insurance_price_coef = 1.5;
-	traders[Traders.THERAPIST].base.loyaltyLevels[1].insurance_price_coef = 1.5;
-	traders[Traders.THERAPIST].base.loyaltyLevels[2].insurance_price_coef = 1.5;
-	traders[Traders.THERAPIST].base.loyaltyLevels[3].insurance_price_coef = 1.5;
 	insuranceConfig.returnChancePercent[Traders.THERAPIST] = 100;
 
 	logger.logWithColor(

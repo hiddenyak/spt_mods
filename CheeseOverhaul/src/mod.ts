@@ -33,6 +33,7 @@ class Mod implements IPostDBLoadMod {
 		const questConfig = configServer.getConfig(ConfigTypes.QUEST);
 		const ragfairConfig = configServer.getConfig(ConfigTypes.RAGFAIR);
 		const inRaidConfig = configServer.getConfig(ConfigTypes.IN_RAID);
+		const itemConfig = configServer.getConfig(ConfigTypes.ITEM);
 
 		handleSkills(tables, logger);
 		handleProfiles(tables, logger);
@@ -40,7 +41,7 @@ class Mod implements IPostDBLoadMod {
 		handleEvents(tables, logger);
 		handleHideout(tables, logger);
 		handleLocations(tables, logger);
-		handleItems(tables, ragfairConfig, logger);
+		handleItems(tables, ragfairConfig, itemConfig, logger);
 		handleQuests(tables, questConfig, logger);
 		handleTraders(tables, insuranceConfig, logger);
 		handleMiscellaneous(tables, repairConfig, inRaidConfig, logger);

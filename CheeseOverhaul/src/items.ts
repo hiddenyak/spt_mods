@@ -6,6 +6,7 @@ import { ILogger } from "@spt/models/spt/utils/ILogger";
 export function handleItems(
 	tables: IDatabaseTables,
 	ragfairConfig: any,
+	itemConfig: any,
 	logger: ILogger
 ): void {
 	const items = tables.templates.items;
@@ -18,6 +19,7 @@ export function handleItems(
 		removeGearDebuffs(items[id]);
 		decreaseWeight(items[id]);
 		handleRepairKit(items[id]);
+		blacklistFlareItems(items[id], itemConfig, logger);
 		ragfairConfig.dynamic.blacklist.custom.push(id);
 	}
 
@@ -26,6 +28,26 @@ export function handleItems(
 		LogTextColor.BLACK,
 		LogBackgroundColor.YELLOW
 	);
+}
+
+function blacklistFlareItems(
+	item: any,
+	itemConfig: any,
+	logger: ILogger
+): void {
+	if (
+		Array.isArray(item._props.FlareTypes) &&
+		item._props.FlareTypes.length > 0 &&
+		item._name != "Ammo"
+	) {
+		itemConfig.blacklist.push(item.id);
+
+		logger.logWithColor(
+			`Blacklisted flare item from Fence: ${item._name} (${item.id})`,
+			LogTextColor.MAGENTA,
+			LogBackgroundColor.WHITE
+		);
+	}
 }
 
 function removeDiscardLimit(item: any): void {
@@ -46,22 +68,30 @@ function removeFilterOnSecureContainer(item: any): void {
 }
 
 function buffAmmoStackSize(item: any, locales: any): void {
-	const redFlareId = "62389ba9a63f32501b1b4451";
-	if (item._parent == "5485a8684bdc2da71d8b4567" && item._id !== redFlareId) {
-		item._props["StackMaxSize"] = 100;
-
-		let damageMult = 1;
-		if (item._props.ammoType === "buckshot") {
-			damageMult = item._props.buckshotBullets;
-		}
-		const stringToAppend =
-			" (" +
-			item._props.Damage * damageMult +
-			"/" +
-			item._props.PenetrationPower +
-			")";
-		locales[`${item._id} Name`] = locales[`${item._id} Name`] + stringToAppend;
+	// Skip if not ammo or has flare types
+	if (
+		item._parent !== "5485a8684bdc2da71d8b4567" ||
+		(Array.isArray(item._props.FlareTypes) && item._props.FlareTypes.length > 0)
+	) {
+		return;
 	}
+
+	item._props["StackMaxSize"] = 100;
+
+	let damageMult = 1;
+	if (item._props.ammoType === "buckshot") {
+		damageMult = item._props.buckshotBullets;
+	}
+
+	const stringToAppend =
+		" (" +
+		item._props.Damage * damageMult +
+		"/" +
+		item._props.PenetrationPower +
+		")";
+
+	//Append damage and penetration to the name
+	locales[`${item._id} Name`] = locales[`${item._id} Name`] + stringToAppend;
 }
 
 function removeGearDebuffs(item: any): void {
@@ -85,8 +115,7 @@ function decreaseWeight(item: any): void {
 		item._parent !== "557596e64bdc2dc2118b4571" &&
 		item._parent !== "55d720f24bdc2d88028b456d"
 	) {
-		item._props["Weight"] =
-			Math.round(0.5 * item._props.Weight * 100) / 100;
+		item._props["Weight"] = Math.round(0.5 * item._props.Weight * 100) / 100;
 	}
 }
 
