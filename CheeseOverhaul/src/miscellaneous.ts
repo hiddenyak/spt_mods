@@ -74,6 +74,13 @@ export function handleMiscellaneous(
 	//Attempt to increase scav extract standing gain
 	inRaidConfig.scavExtractStandingGain = 0.1;
 
+	//Buff SJ12
+	globals.config.Health.Effects.Stimulator.Buffs.Buffs_SJ12_TGLabs.forEach(
+		(buff) => {
+			buff.Duration *= 2;
+		}
+	);
+
 	logger.logWithColor(
 		"Handled Miscellaneous",
 		LogTextColor.BLACK,

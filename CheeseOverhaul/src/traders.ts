@@ -17,9 +17,24 @@ export function handleTraders(
 	traders[Traders.THERAPIST].base.insurance.max_return_hour = 12;
 	insuranceConfig.returnChancePercent[Traders.THERAPIST] = 100;
 
+	//Remove buying restrictions from all items
+	for (const assortR in traders) {
+		if (assortR !== "ragfair" && assortR !== "638f541a29ffd1183d187f57") {
+			removeBuyRestrictions(traders[assortR].assort.items);
+		}
+	}
+
 	logger.logWithColor(
 		"Handled Traders",
 		LogTextColor.BLACK,
 		LogBackgroundColor.YELLOW
 	);
+}
+
+function removeBuyRestrictions(items: any): void {
+	for (const level in items) {
+		if (items[level].upd?.["BuyRestrictionMax"] !== undefined) {
+			delete items[level].upd["BuyRestrictionMax"];
+		}
+	}
 }
