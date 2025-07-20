@@ -74,7 +74,7 @@ export function handleSkills(tables: IDatabaseTables, logger: ILogger): void {
 	globals.config.SkillsSettings.Search.SearchAction = 3;
 
 	//Covert Movement
-	globals.config.SkillsSettings.CovertMovement.MovementAction = 6;
+	globals.config.SkillsSettings.CovertMovement.MovementAction = 10;
 
 	//Light Vests
 	globals.config.SkillsSettings.LightVests.MoveSpeedPenaltyReductionHVestsReducePerLevel = 0.02;
