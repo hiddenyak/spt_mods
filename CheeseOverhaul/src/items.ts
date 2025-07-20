@@ -40,10 +40,10 @@ function blacklistFlareItems(
 		item._props.FlareTypes.length > 0 &&
 		item._name != "Ammo"
 	) {
-		itemConfig.blacklist.push(item.id);
+		itemConfig.blacklist.push(item._id);
 
 		logger.logWithColor(
-			`Blacklisted flare item from Fence: ${item._name} (${item.id})`,
+			`Blacklisted flare item from Fence: ${item._name} (${item._id})`,
 			LogTextColor.MAGENTA,
 			LogBackgroundColor.WHITE
 		);
