@@ -2,6 +2,7 @@ import { LogBackgroundColor } from "@spt/models/spt/logging/LogBackgroundColor";
 import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
 import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
 import { ILogger } from "@spt/models/spt/utils/ILogger";
+import { Traders } from "@spt/models/enums/Traders";
 
 export function handleMiscellaneous(
 	tables: IDatabaseTables,
