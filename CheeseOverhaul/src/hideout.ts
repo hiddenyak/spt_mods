@@ -40,7 +40,7 @@ function modifyHideoutAreas(hideout: IDatabaseTables["hideout"]): void {
 
 function speedUpConstruction(stage: any): void {
 	if (stage.constructionTime > 0) {
-		stage.constructionTime *= 0.25;
+		stage.constructionTime *= 0.05;
 	}
 }
 
