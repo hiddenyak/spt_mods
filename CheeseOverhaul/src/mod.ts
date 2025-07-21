@@ -19,6 +19,7 @@ import { handleTraders } from "./traders";
 import { handleHideout } from "./hideout";
 import { handleMiscellaneous } from "./miscellaneous";
 import { handleLocations } from "./locations";
+import { handleBots } from "./bots";
 
 class Mod implements IPostDBLoadMod {
 	postDBLoad(container: DependencyContainer): void {
@@ -44,13 +45,9 @@ class Mod implements IPostDBLoadMod {
 		handleItems(tables, ragfairConfig, itemConfig, logger);
 		handleQuests(tables, questConfig, logger);
 		handleTraders(tables, insuranceConfig, logger);
+		handleBots(tables, logger);
 		handleMiscellaneous(tables, repairConfig, inRaidConfig, logger);
 
-		//Increase stash level at each level
-		// items["566abbc34bdc2d92178b4576"]._props.Grids[0]._props.cellsV = 80;
-		// items["5811ce572459770cba1a34ea"]._props.Grids[0]._props.cellsV = 80;
-		// items["5811ce662459770f6f490f32"]._props.Grids[0]._props.cellsV = 80;
-		// items["5811ce772459770e9e5f9532"]._props.Grids[0]._props.cellsV = 80;
 		logger.logWithColor(art, LogTextColor.YELLOW, LogBackgroundColor.BLACK);
 	}
 }
