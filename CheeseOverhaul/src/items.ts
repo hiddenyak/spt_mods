@@ -30,23 +30,13 @@ export function handleItems(
 	);
 }
 
-function blacklistFlareItems(
-	item: any,
-	itemConfig: any,
-	logger: ILogger
-): void {
+function blacklistFlareItems(item: any, itemConfig: any): void {
 	if (
 		Array.isArray(item._props.FlareTypes) &&
 		item._props.FlareTypes.length > 0 &&
 		item._name != "Ammo"
 	) {
 		itemConfig.blacklist.push(item._id);
-
-		logger.logWithColor(
-			`Blacklisted flare item from Fence: ${item._name} (${item._id})`,
-			LogTextColor.MAGENTA,
-			LogBackgroundColor.WHITE
-		);
 	}
 }
 
