@@ -7,7 +7,7 @@ export function handleBots(tables: IDatabaseTables, logger: ILogger): void {
 	const chance = 500;
 
 	for (const botType in tables.bots.types) {
-		if (botType.includes("boss") && botType == "bosstest") {
+		if (botType.includes("boss") && botType != "bosstest") {
 			const bossPockets = tables.bots.types[botType].inventory.items.Pockets;
 			const bossTotal = Object.values(bossPockets).reduce((a, b) => a + b, 0);
 
@@ -20,7 +20,7 @@ export function handleBots(tables: IDatabaseTables, logger: ILogger): void {
 			rollChance = value / (bossTotal + value);
 
 			logger.info(
-				`[BossesHaveLegaMedals] ${botType}: Chance is ${Number(
+				`Chance for  ${botType} to have a Lega Medal is is ${Number(
 					rollChance
 				).toLocaleString(undefined, {
 					style: "percent",
