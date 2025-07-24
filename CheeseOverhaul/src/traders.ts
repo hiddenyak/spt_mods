@@ -24,6 +24,11 @@ export function handleTraders(
 		}
 	}
 
+	// Change LL3 requirements for Ref to be 0.35
+	tables.traders[Traders.REF].base.loyaltyLevels[3].minStanding = 0.35;
+	// Change LL4 requirements for Ref to be 0.4
+	tables.traders[Traders.REF].base.loyaltyLevels[3].minStanding = 0.4;
+
 	logger.logWithColor(
 		"Handled Traders",
 		LogTextColor.BLACK,
