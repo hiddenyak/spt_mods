@@ -19,7 +19,7 @@ export function handleItems(
 		removeGearDebuffs(items[id]);
 		decreaseWeight(items[id]);
 		handleRepairKit(items[id]);
-		blacklistFlareItems(items[id], itemConfig, logger);
+		blacklistFlareItems(items[id], itemConfig);
 		ragfairConfig.dynamic.blacklist.custom.push(id);
 	}
 
@@ -93,9 +93,9 @@ function removeGearDebuffs(item: any): void {
 		item._props["weaponErgonomicPenalty"] = 0;
 	}
 
-	if (item._props.speedPenaltyPercent) {
-		item._props["speedPenaltyPercent"] = 0;
-	}
+	// if (item._props.speedPenaltyPercent) {
+	// 	item._props["speedPenaltyPercent"] = 0;
+	// }
 }
 
 function decreaseWeight(item: any): void {
